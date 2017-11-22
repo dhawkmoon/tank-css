@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<title>Tank</title>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+	
+	<h1>CSS Tank</h1>
+	<p>Instructions:</p>
+	<ul>
+		<li>W,A,S,D - for moving</li>
+		<li>P - move trunk right</li>
+		<li>O - move trunk left</li>
+		<li>Space - fire</li>
+	</ul>
+	<div id="tank" class="tank">
+		<div class="tank__trunk">
+			<div class="bullet"></div>
+		</div>
+		<div class="tank__body"></div>
+		
+	</div>
+	
+<!--
+	<div class="panel">
+		<div class="btn" onclick="t.goUp()">Up</div>
+		<div class="btn" onclick="t.goLeft()">Left</div>
+		<div class="btn" onclick="t.goDown()">Down</div>
+		<div class="btn" onclick="t.goRight()">Right</div>
+	</div>
+-->
+	
+	<script>
+		
+		var map = {}; // You could also use an array
+		onkeydown = onkeyup = function(e){
+		    e = e || event; // to deal with IE
+		    map[e.keyCode] = e.type == 'keydown';
+		    /* insert conditional here */
+		    //console.log(map)
+		    t.handleKeypress(map)
+		}
+		
+		
+		var tank = function( id ) {
+			this.instance = document.getElementById( id )
+			this.trunk = this.instance.firstElementChild
+			this.bullet = this.trunk.firstElementChild
+			//console.log(this.trunk)
+			this.trunkRotate = 0
+			this.goUp = function()
+			{
+				//console.log(e)
+				this.instance.style.top = this.instance.offsetTop - 20 + 'px'
+				this.instance.classList = ['tank']
+			}
+			this.goLeft = function()
+			{
+				this.instance.style.left = this.instance.offsetLeft - 20 + 'px'
+				this.instance.classList = ['tank tank--left']
+			}
+			this.goRight = function()
+			{
+				this.instance.style.left = this.instance.offsetLeft + 10 + 'px'
+				this.instance.classList = ['tank tank--right']
+			}
+			this.goDown = function()
+			{
+				this.instance.style.top = this.instance.offsetTop + 10 + 'px'
+				this.instance.classList = ['tank tank--down']
+			}
+			this.handleKeypress = function(keys)
+			{
+				//console.log(e)
+				if( keys[68] ) {
+					this.goRight()	
+				}
+				
+				if( keys[87] ) {
+					this.goUp()	
+				}
+				
+				if( keys[65] ) {
+					this.goLeft()	
+				}
+				
+				if( keys[83] ) {
+					this.goDown()	
+				}
+				
+				if( keys[68] ) {
+					this.goRight()	
+				}
+				
+				if( keys[80] ) { 
+					this.rotateTrunkRight()
+				}
+				
+				if( keys[79] ) {
+					this.rotateTrunkLeft()	
+				}
+				
+				if( keys[32] ) {
+					if( !this.firing ) {
+						this.fire()
+					}
+					clearTimeout( this.firing )
+					this.firing = setTimeout( function(tank ){
+							tank.fire()
+						}, 200, this)
+					
+				}
+			}
+			
+			this.rotateTrunkLeft = function()
+			{
+				this.trunk.style.transform = 'rotate(' + --this.trunkRotate*10 + 'deg)'
+			}
+			
+			this.rotateTrunkRight = function()
+			{
+				this.trunk.style.transform = 'rotate(' + ++this.trunkRotate*10 + 'deg)'
+			}
+			
+			this.fire = function()
+			{
+				this.bullet.classList = ['bullet bullet--fired']
+				setTimeout(function( bullet ){
+					bullet.classList = ['bullet']
+				}, 400, this.bullet)
+			}
+/*
+			this.x = 
+			this.y = 
+*/
+		}
+		
+		var t = new tank('tank')
+		
+	</script>
+	
+</body>
+</html>
