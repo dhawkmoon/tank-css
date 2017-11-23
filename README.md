@@ -1,2 +1,2 @@
 # tank-css
-Simple css tank. Just for fun&amp;
+Simple css tank. Just for fun.
